@@ -215,10 +215,19 @@ print("✅ ВИЗУАЛЬНЫЙ КАЛЕНДАРЬ И РАСПИСАНИЕ ГО�
 
 # БЛОК 3 - ПОЛНЫЙ ФУНКЦИОНАЛ БОТ-А
 async def start_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Выбор услуги"""
+    """Выбор услуги - с Web App"""
+    from telegram import WebAppInfo
+    
     text = f"💈 {CONFIG['salon_name']} - {CONFIG['salon_type']}\n\n✂️ ВЫБЕРИТЕ УСЛУГУ:"
     keyboard = [[InlineKeyboardButton(f"✂️ {service} - {price}₽", callback_data=f"service_{service}")]
                 for service, price in CONFIG["services"].items()]
+    
+    # 🎨 НОВОЕ: Web App кнопка для красивого интерфейса
+    keyboard.append([InlineKeyboardButton(
+        "🎨 Забронировать (новый интерфейс)",
+        web_app=WebAppInfo(url="https://charodeyka-booking.netlify.app")
+    )])
+    
     keyboard.append([InlineKeyboardButton("ℹ️ О САЛОНЕ", callback_data="about")])
     await update.message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
 

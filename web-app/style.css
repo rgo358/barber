@@ -1,0 +1,413 @@
+:root {
+    /* ZAVTRA.live цветовая палитра */
+    --purple-primary: #A855F7;      /* Основной фиолетовый */
+    --purple-light: #D8B4FE;        /* Светлый фиолетовый */
+    --lime-accent: #BFFF00;         /* Неоновый лайм */
+    --dark-bg: #1a1a1a;            /* Тёмный фон */
+    --gray-light: #f5f5f5;          /* Светлый серый */
+    --white: #ffffff;
+    
+    /* Вспомогательные цвета */
+    --success: #10b981;             /* Зелёный */
+    --danger: #ef4444;              /* Красный */
+    --warning: #f59e0b;             /* Оранжевый */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #2d1b4e 100%);
+    color: var(--white);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 120px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 📱 ШАПКА */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-light) 100%);
+    border-radius: 32px;
+    box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.header .subtitle {
+    font-size: 16px;
+    opacity: 0.95;
+    font-weight: 500;
+}
+
+/* 📋 ШАГИ */
+.step {
+    animation: slideIn 0.3s ease-out;
+    display: block;
+}
+
+.step.hidden {
+    display: none;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 🎨 СЕТКИ ВЫБОРА */
+.services-grid,
+.masters-grid,
+.times-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.service-btn,
+.master-btn,
+.time-btn {
+    padding: 20px 16px;
+    background: linear-gradient(135deg, #2d1b4e 0%, #1f0f3d 100%);
+    border: 2px solid transparent;
+    border-radius: 24px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.service-btn:hover,
+.master-btn:hover,
+.time-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+    border-color: var(--lime-accent);
+}
+
+.service-btn.active,
+.master-btn.active,
+.time-btn.active {
+    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-light) 100%);
+    border-color: var(--lime-accent);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(191, 255, 0, 0.3);
+}
+
+/* 📅 КАЛЕНДАРЬ */
+.calendar {
+    margin-bottom: 24px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.calendar-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.calendar-nav button {
+    background: var(--purple-primary);
+    border: none;
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.calendar-nav button:hover {
+    background: var(--lime-accent);
+    color: var(--dark-bg);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime-accent);
+    padding: 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.calendar-day:hover:not(.disabled) {
+    background: var(--purple-primary);
+    border-color: var(--lime-accent);
+    transform: scale(1.05);
+}
+
+.calendar-day.active {
+    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--lime-accent) 100%);
+    color: var(--dark-bg);
+    border-color: var(--lime-accent);
+    box-shadow: 0 0 16px rgba(191, 255, 0, 0.4);
+}
+
+.calendar-day.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.calendar-day.today {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    border-color: var(--success);
+}
+
+/* ✅ ПОДТВЕРЖДЕНИЕ */
+.confirm-card {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(191, 255, 0, 0.05) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.confirm-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(191, 255, 0, 0.1);
+}
+
+.confirm-item:last-child {
+    border-bottom: none;
+}
+
+.confirm-item .label {
+    font-weight: 600;
+    color: var(--lime-accent);
+    font-size: 14px;
+}
+
+.confirm-item .value {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* 🎉 УСПЕХ */
+.success-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(191, 255, 0, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    border-radius: 32px;
+    padding: 60px 40px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.success-icon {
+    font-size: 72px;
+    margin-bottom: 24px;
+    animation: bounce 0.6s ease-out;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.success-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--white);
+}
+
+.success-card p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 🔘 КНОПКИ */
+.buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: calc(600px - 40px);
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    flex: 1;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--lime-accent) 100%);
+    color: var(--dark-bg);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(168, 85, 247, 0.2);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success) 0%, #10b981 100%);
+    color: var(--white);
+}
+
+.btn-success:hover {
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--purple-primary) 0%, var(--lime-accent) 100%);
+    color: var(--dark-bg);
+}
+
+.btn.hidden {
+    display: none;
+}
+
+/* 📱 АДАПТИВ */
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+
+    .header {
+        padding: 32px 16px;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    .step-title {
+        font-size: 20px;
+    }
+
+    .services-grid,
+    .masters-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .times-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .buttons {
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        max-width: calc(100% - 32px);
+    }
+
+    .btn {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+}
+
+/* 🌙 DARK MODE (автоматически) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, #0f0a1a 100%);
+    }
+}
+
+/* TELEGRAM UI ИНТЕГРАЦИЯ */
+body.telegram-app {
+    background: var(--tg-bg-color, var(--dark-bg));
+    color: var(--tg-text-color, var(--white));
+}

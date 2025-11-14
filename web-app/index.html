@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чародейка - Запись онлайн</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 📱 ШАПКА -->
+        <header class="header">
+            <h1>💈 Чародейка</h1>
+            <p class="subtitle">Запись на услугу</p>
+        </header>
+
+        <!-- 1️⃣ ВЫБОР УСЛУГИ -->
+        <section class="step" id="step-service">
+            <h2 class="step-title">✂️ Выберите услугу</h2>
+            <div class="services-grid" id="services-container"></div>
+        </section>
+
+        <!-- 2️⃣ ВЫБОР МАСТЕРА -->
+        <section class="step hidden" id="step-master">
+            <h2 class="step-title">👨‍💼 Выберите мастера</h2>
+            <div class="masters-grid" id="masters-container"></div>
+        </section>
+
+        <!-- 3️⃣ ВЫБОР ДАТЫ -->
+        <section class="step hidden" id="step-date">
+            <h2 class="step-title">📅 Выберите дату</h2>
+            <div class="calendar" id="calendar-container"></div>
+        </section>
+
+        <!-- 4️⃣ ВЫБОР ВРЕМЕНИ -->
+        <section class="step hidden" id="step-time">
+            <h2 class="step-title">⏰ Выберите время</h2>
+            <div class="times-grid" id="times-container"></div>
+        </section>
+
+        <!-- 5️⃣ ПОДТВЕРЖДЕНИЕ -->
+        <section class="step hidden" id="step-confirm">
+            <h2 class="step-title">✅ Подтверждение</h2>
+            <div class="confirm-card">
+                <div class="confirm-item">
+                    <span class="label">💈 Салон:</span>
+                    <span class="value">Чародейка</span>
+                </div>
+                <div class="confirm-item">
+                    <span class="label">✂️ Услуга:</span>
+                    <span class="value" id="confirm-service">-</span>
+                </div>
+                <div class="confirm-item">
+                    <span class="label">👨‍💼 Мастер:</span>
+                    <span class="value" id="confirm-master">-</span>
+                </div>
+                <div class="confirm-item">
+                    <span class="label">📅 Дата:</span>
+                    <span class="value" id="confirm-date">-</span>
+                </div>
+                <div class="confirm-item">
+                    <span class="label">⏰ Время:</span>
+                    <span class="value" id="confirm-time">-</span>
+                </div>
+                <div class="confirm-item">
+                    <span class="label">💰 Цена:</span>
+                    <span class="value" id="confirm-price">по запросу</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🎉 УСПЕХ -->
+        <section class="step hidden" id="step-success">
+            <div class="success-card">
+                <div class="success-icon">🎉</div>
+                <h2>Запись подтверждена!</h2>
+                <p id="success-message">Спасибо за вашу запись</p>
+            </div>
+        </section>
+
+        <!-- 🔘 КНОПКИ НАВИГАЦИИ -->
+        <div class="buttons">
+            <button id="btn-back" class="btn btn-secondary hidden">⬅️ Назад</button>
+            <button id="btn-next" class="btn btn-primary">Далее ➜</button>
+            <button id="btn-confirm" class="btn btn-success hidden">✅ Подтвердить</button>
+            <button id="btn-done" class="btn btn-info hidden">🏠 На главную</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

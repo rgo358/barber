@@ -47,7 +47,7 @@ CONFIG = {
         "working_hours": {
             "start": "08:00",
             "end": "18:00",
-            "lunch": "",
+            "lunch": ["12:00", "13:00"],
             "closed_days": []  # Ежедневно: Пн-Вс 08:00-18:00
         },
         "website": "https://yandex.ru/maps/org/charodeyka/1049163937/",

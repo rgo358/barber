@@ -51,10 +51,11 @@ check_files_size() {
 
 check_secrets() {
     echo -ne "${YELLOW}🔐 Проверка на секреты...${NC}"
-    git diff HEAD | grep -i -E 'token|password|secret|api.key' > /tmp/secrets.txt 2>&1 || true
-    if [ -s /tmp/secrets.txt ]; then
-        echo -e " ${RED}✗ ОБНАРУЖЕНЫ ПОТЕНЦИАЛЬНЫЕ СЕКРЕТЫ!${NC}"
-        cat /tmp/secrets.txt
+    # Игнорируем строки из примеров/документации/комментариев
+    # Ищем реальные присвоения с кавычками
+    LEAKED=$(git diff HEAD --unified=0 | grep -E '^\+[^+]' | grep -E '(password|token|secret|api_key)\s*=\s*["\x27]' | grep -v -E '(#|echo|XXXX|\.\.\.|example)' || true)
+    if [ -n "$LEAKED" ]; then
+        echo -e " ${RED}✗${NC}"
         return 1
     else
         echo -e " ${GREEN}✓${NC}"

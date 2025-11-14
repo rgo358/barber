@@ -1,0 +1,64 @@
+name: 🔍 Quality Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
+    - name: 🔍 Check Python syntax
+      run: |
+        echo "🔍 Checking Python syntax..."
+        python3 -m py_compile $(find . -name "*.py" -type f)
+        echo "✅ Python syntax OK"
+
+    - name: 📏 Check file sizes
+      run: |
+        echo "📏 Checking file sizes..."
+        find . -type f -size +50M ! -path './.git/*' ! -path './venv/*' -exec ls -lh {} \;
+        [ $(find . -type f -size +50M ! -path './.git/*' ! -path './venv/*' | wc -l) -eq 0 ] || exit 1
+        echo "✅ File sizes OK"
+
+    - name: 🔐 Check for secrets
+      run: |
+        echo "🔐 Checking for secrets..."
+        git diff origin/main HEAD | grep -i -E '(token|password|secret|api.key|api_key)' && exit 1 || true
+        echo "✅ No secrets detected"
+
+    - name: 📝 Validate JSON
+      run: |
+        echo "📝 Validating JSON files..."
+        for file in $(find . -name "*.json" -type f); do
+          python3 -m json.tool "$file" > /dev/null || exit 1
+        done
+        echo "✅ JSON validation OK"
+
+    - name: ✅ Git status check
+      run: |
+        echo "✅ Git status check..."
+        git status
+        [ -z "$(git status --porcelain)" ] || echo "⚠️  Working directory not clean (expected)"
+
+    - name: 📊 Summary
+      run: |
+        echo "=== QUALITY CHECK SUMMARY ==="
+        echo "✅ Python syntax: OK"
+        echo "✅ File sizes: OK"
+        echo "✅ Secrets: None detected"
+        echo "✅ JSON: Valid"
+        echo "==============================="

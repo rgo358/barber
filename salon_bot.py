@@ -172,7 +172,13 @@ class UltraCalendar:
         times = []
         start = datetime.datetime.strptime(CONFIG["salon_info"]["working_hours"]["start"], "%H:%M")
         end = datetime.datetime.strptime(CONFIG["salon_info"]["working_hours"]["end"], "%H:%M")
-        lunch = CONFIG["salon_info"]["working_hours"]["lunch"].split("-")
+        
+        lunch_config = CONFIG["salon_info"]["working_hours"]["lunch"]
+        if isinstance(lunch_config, str):
+            lunch = lunch_config.split("-")
+        else:
+            lunch = lunch_config
+        
         lunch_start = datetime.datetime.strptime(lunch[0], "%H:%M")
         lunch_end = datetime.datetime.strptime(lunch[1], "%H:%M")
 
@@ -242,7 +248,7 @@ async def handle_about(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"📍 Адрес: {CONFIG['salon_info']['address']}\n"
                 f"📱 Телефон: {CONFIG['salon_info']['phone']}\n"
                 f"⏰ Режим: {CONFIG['salon_info']['working_hours']['start']}-{CONFIG['salon_info']['working_hours']['end']}\n"
-                f"🍽️ Обед: {CONFIG['salon_info']['working_hours']['lunch']}\n\n"
+                f"🍽️ Обед: {'-'.join(CONFIG['salon_info']['working_hours']['lunch']) if isinstance(CONFIG['salon_info']['working_hours']['lunch'], list) else CONFIG['salon_info']['working_hours']['lunch']}\n\n"
                 f"👨‍💼 МАСТЕРА:\n")
     
     for master in CONFIG["masters"].keys():

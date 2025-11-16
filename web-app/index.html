@@ -11,9 +11,25 @@
     <div class="container">
         <!-- 📱 ШАПКА -->
         <header class="header">
-            <h1>💈 Чародейка</h1>
-            <p class="subtitle">Запись на услугу</p>
+            <div class="header-top">
+                <button id="btn-menu" class="menu-btn" aria-label="Меню">☰</button>
+                <div class="header-title">
+                    <h1>💈 Чародейка</h1>
+                    <p class="subtitle">Запись на услугу</p>
+                </div>
+            </div>
         </header>
+
+        <!-- Меню Overlay -->
+        <div id="menu-overlay" class="menu-overlay hidden">
+            <div class="menu-panel">
+                <button class="menu-close" id="menu-close">✕</button>
+                <ul class="menu-list">
+                    <li><button id="menu-about" class="menu-item">ℹ️ О салоне</button></li>
+                    <li><button id="menu-help" class="menu-item">❓ Помощь</button></li>
+                </ul>
+            </div>
+        </div>
 
         <!-- 1️⃣ ВЫБОР УСЛУГИ -->
         <section class="step" id="step-service">

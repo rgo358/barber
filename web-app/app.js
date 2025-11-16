@@ -63,6 +63,72 @@ async function loadData() {
 }
 
 // === ИНИЦИАЛИЗАЦИЯ UI ===
+
+// === МЕНЮ OVERLAY ===
+function toggleMenu(open) {
+    const overlay = document.getElementById('menu-overlay');
+    if (overlay) overlay.classList.toggle('hidden', !open);
+}
+
+function attachMenuHandlers() {
+    const menuBtn = document.getElementById('btn-menu');
+    if (menuBtn) menuBtn.addEventListener('click', () => toggleMenu(true));
+
+    const closeBtn = document.getElementById('menu-close');
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleMenu(false));
+
+    const overlay = document.getElementById('menu-overlay');
+    if (overlay) overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) toggleMenu(false);
+    });
+
+    const aboutBtn = document.getElementById('menu-about');
+    if (aboutBtn) aboutBtn.addEventListener('click', () => {
+        toggleMenu(false);
+        alert('💈 Чародейка\n📍 Азовская ул., 4, Армавир\n⏰ 08:00-18:00');
+    });
+
+    const helpBtn = document.getElementById('menu-help');
+    if (helpBtn) helpBtn.addEventListener('click', () => {
+        toggleMenu(false);
+        alert('❓ СПРАВКА\n\n/start — новая запись\n/mybookings — мои записи');
+    });
+}
+
+
+
+// === МЕНЮ OVERLAY ===
+function toggleMenu(open) {
+    const overlay = document.getElementById('menu-overlay');
+    if (overlay) overlay.classList.toggle('hidden', !open);
+}
+
+function attachMenuHandlers() {
+    const menuBtn = document.getElementById('btn-menu');
+    if (menuBtn) menuBtn.addEventListener('click', () => toggleMenu(true));
+
+    const closeBtn = document.getElementById('menu-close');
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleMenu(false));
+
+    const overlay = document.getElementById('menu-overlay');
+    if (overlay) overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) toggleMenu(false);
+    });
+
+    const aboutBtn = document.getElementById('menu-about');
+    if (aboutBtn) aboutBtn.addEventListener('click', () => {
+        toggleMenu(false);
+        alert('💈 Чародейка\n📍 Азовская ул., 4, Армавир\n⏰ 08:00-18:00');
+    });
+
+    const helpBtn = document.getElementById('menu-help');
+    if (helpBtn) helpBtn.addEventListener('click', () => {
+        toggleMenu(false);
+        alert('❓ СПРАВКА\n\n/start — новая запись\n/mybookings — мои записи');
+    });
+}
+
+
 function initUI() {
     renderServices();
     attachEventListeners();
@@ -340,6 +406,12 @@ function attachEventListeners() {
     
     document.getElementById('btn-back').addEventListener('click', goBack);
     document.getElementById('btn-confirm').addEventListener('click', confirmBooking);
+    // Меню
+    attachMenuHandlers();
+
+    // Меню
+    attachMenuHandlers();
+
     document.getElementById('btn-done').addEventListener('click', () => {
         if (tg.close) tg.close();
     });

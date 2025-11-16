@@ -15,6 +15,8 @@ import json
 import pytz
 import re
 from collections import Counter
+import logging
+import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, ContextTypes, filters
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -26,6 +28,28 @@ try:
     print("✅ Адаптер для Colab активирован")
 except ImportError:
     print("⚠️  Режим Colab не активирован")
+
+# === ЛОГИРОВАНИЕ ===
+import os
+os.makedirs('logs', exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    filename='logs/bot.log',
+    filemode='a'
+)
+logger = logging.getLogger(__name__)
+
+# === ЛОГИРОВАНИЕ ===
+import os
+os.makedirs('logs', exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    filename='logs/bot.log',
+    filemode='a'
+)
+logger = logging.getLogger(__name__)
 
 # ОПТИМИЗИРОВАННАЯ КОНФИГУРАЦИЯ - САЛОН "ЧАРОДЕЙКА"
 CONFIG = {
@@ -234,6 +258,8 @@ async def start_booking(update: Update, context: ContextTypes.DEFAULT_TYPE):
         web_app=WebAppInfo(url="https://charodeyka-booking.netlify.app")
     )])
     
+    keyboard.append([InlineKeyboardButton("📋 Меню", callback_data="menu")])
+    keyboard.append([InlineKeyboardButton("📋 Меню", callback_data="menu")])
     keyboard.append([InlineKeyboardButton("ℹ️ О САЛОНЕ", callback_data="about")])
     await update.message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
 
@@ -431,6 +457,56 @@ async def handle_confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE
             del user_sessions[query.from_user.id]
 
 
+
+
+async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Главное меню"""
+    query = update.callback_query
+    await query.answer()
+    from telegram import WebAppInfo
+    keyboard = [
+        [InlineKeyboardButton("🎨 Веб-интерфейс", web_app=WebAppInfo(url="https://charodeyka-booking.netlify.app"))],
+        [InlineKeyboardButton("📭 Мои записи", callback_data="mybookings")],
+        [InlineKeyboardButton("ℹ️ О салоне", callback_data="about")],
+        [InlineKeyboardButton("❓ Помощь", callback_data="help")]
+    ]
+    await query.edit_message_text("📋 МЕНЮ", reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+async def handle_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Справка"""
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(
+        "❓ СПРАВКА:\n\n/start — новая запись\n/mybookings — мои записи\n/admin — админ\n/master — мастер",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Меню", callback_data="menu")]])
+    )
+
+
+
+async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Главное меню"""
+    query = update.callback_query
+    await query.answer()
+    from telegram import WebAppInfo
+    keyboard = [
+        [InlineKeyboardButton("🎨 Веб-интерфейс", web_app=WebAppInfo(url="https://charodeyka-booking.netlify.app"))],
+        [InlineKeyboardButton("📭 Мои записи", callback_data="mybookings")],
+        [InlineKeyboardButton("ℹ️ О салоне", callback_data="about")],
+        [InlineKeyboardButton("❓ Помощь", callback_data="help")]
+    ]
+    await query.edit_message_text("📋 МЕНЮ", reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+async def handle_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Справка"""
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(
+        "❓ СПРАВКА:\n\n/start — новая запись\n/mybookings — мои записи\n/admin — админ\n/master — мастер",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⬅️ Меню", callback_data="menu")]])
+    )
+
 async def my_bookings(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Мои записи"""
     user_id = update.effective_user.id
@@ -601,6 +677,10 @@ class AutoRestartBot:
         app.add_handler(CommandHandler("admin", admin_panel))
         app.add_handler(CommandHandler("master", master_panel))
 
+        app.add_handler(CallbackQueryHandler(handle_menu, pattern="^menu$"))
+        app.add_handler(CallbackQueryHandler(handle_help, pattern="^help$"))
+        app.add_handler(CallbackQueryHandler(handle_menu, pattern="^menu$"))
+        app.add_handler(CallbackQueryHandler(handle_help, pattern="^help$"))
         app.add_handler(CallbackQueryHandler(handle_about, pattern="^about$"))
         app.add_handler(CallbackQueryHandler(handle_service, pattern="^(service_|back_to_services|back_services)"))
         app.add_handler(CallbackQueryHandler(handle_master, pattern="^(master_|back_services)"))
